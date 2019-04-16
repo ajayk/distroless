@@ -90,6 +90,7 @@ dpkg_list(
         "libfontconfig1",
         "openjdk-8-jre-headless",
         "openjdk-11-jre-headless",
+        "openjdk-12-jre-headless",
 
         #python
         "libpython2.7-minimal",
