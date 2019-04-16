@@ -51,6 +51,8 @@ cacerts_java(
     ),
     ("java11", "openjdk-11-jre-headless", "/usr/lib/jvm/java-11-openjdk-amd64/bin/java"),
     ("java11_debug", "openjdk-11-jre-headless", "/usr/lib/jvm/java-11-openjdk-amd64/bin/java"),
+    ("java12", "openjdk-12-jre-headless", "/usr/lib/jvm/java-12-openjdk-amd64/bin/java"),
+    ("java12", "openjdk-12-jre-headless", "/usr/lib/jvm/java-12-openjdk-amd64/bin/java"),
 ]]
 
 load("@io_bazel_rules_docker//contrib:test.bzl", "container_test")
@@ -79,6 +81,18 @@ container_test(
     image = ":java11_debug",
 )
 
+container_test(
+    name = "java12_test",
+    configs = ["testdata/java12.yaml"],
+    image = ":java12",
+)
+
+container_test(
+    name = "java11_debug_test",
+    configs = ["testdata/java12_debug.yaml"],
+    image = ":java12_debug",
+)
+
 java_image(
     name = "check_certs_java8",
     srcs = ["testdata/CheckCerts.java"],
@@ -93,6 +107,13 @@ java_image(
     main_class = "testdata.CheckCerts",
 )
 
+java_image(
+    name = "check_certs_java12",
+    srcs = ["testdata/CheckCerts.java"],
+    base = "//java:java12",
+    main_class = "testdata.CheckCerts",
+)
+
 container_test(
     name = "check_certs_java8_test",
     configs = ["testdata/java8_certs.yaml"],
@@ -103,4 +124,10 @@ container_test(
     name = "check_certs_java11_test",
     configs = ["testdata/java11_certs.yaml"],
     image = ":check_certs_java11",
+)
+
+container_test(
+    name = "check_certs_java12_test",
+    configs = ["testdata/java12_certs.yaml"],
+    image = ":check_certs_java12",
 )
